@@ -6,6 +6,7 @@ const Canvas = () => {
     height: window.innerHeight
   });
   const [painting, setPainting] = useState(false);
+  const [imageData, setImageData] = useState(null);
   const digitCanvas = useRef(null);
   const ctx = useRef(null);
 
@@ -17,7 +18,6 @@ const Canvas = () => {
   }, [canvasSize]);
 
   const startPosition = e => {
-    console.log("start");
     setPainting(true);
     const pos = getMousePos(e);
     ctx.current.lineTo(pos.x, pos.y);
@@ -25,9 +25,9 @@ const Canvas = () => {
   };
 
   const finishedPosition = () => {
-    console.log("finish");
     setPainting(false);
     ctx.current.beginPath();
+    setImageData(ctx.current.getImageData(0, 0, 200, 200).data);
   };
 
   const getMousePos = e => {
@@ -40,17 +40,17 @@ const Canvas = () => {
 
   const draw = e => {
     if (!painting) return;
-    console.log("drawing...");
     const pos = getMousePos(e);
     ctx.current.lineWidth = 10;
     ctx.current.lineCap = "round";
     ctx.current.strokeStyle = "black";
-
     ctx.current.lineTo(pos.x, pos.y);
     ctx.current.stroke();
     ctx.current.beginPath();
     ctx.current.moveTo(pos.x, pos.y);
   };
+
+  console.log(imageData);
 
   return (
     <canvas
