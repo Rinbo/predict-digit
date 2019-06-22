@@ -21,7 +21,7 @@ const Canvas = ({ setImageData }) => {
   const finishedPosition = () => {
     setPainting(false);
     ctx.current.beginPath();
-    parseImage(ctx.current.getImageData(0, 0, 200, 200));
+    parseImage(ctx.current.getImageData(0, 0, 168, 168));
   };
 
   const getMousePos = e => {
@@ -48,8 +48,8 @@ const Canvas = ({ setImageData }) => {
     const grayScaleArray = image.data.filter(
       (e, index) => (index + 1) % 4 === 0
     );
-    setImageData(image);
-    console.log(grayScaleArray.slice(0, 199));
+    setImageData(grayScaleArray);
+   
   };
 
   return (

@@ -3,7 +3,7 @@ import Canvas from "./Canvas";
 import OutputCanvas from "./OutputCanvas";
 
 const App = () => {
-  const [imageData, setImageData] = useState(null);
+  const [scaledImage, setImageData] = useState(null);
 
   return (
     <div className="container mx-auto">
@@ -16,7 +16,7 @@ const App = () => {
           predict which number you drew.
         </div>
         <Canvas setImageData={setImageData} />
-        <OutputCanvas imageData={imageData} />
+        <OutputCanvas scaledImage={scaledImage} />
       </div>
     </div>
   );
