@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
+import { convertPixels } from "../utility/pixelConverter";
+import { ORIGIN_PIXEL_COUNT } from "../utility/pixelConstants";
 
 const Canvas = ({ setImageData }) => {
   const [painting, setPainting] = useState(false);
@@ -6,8 +8,8 @@ const Canvas = ({ setImageData }) => {
   const ctx = useRef(null);
 
   useEffect(() => {
-    digitCanvas.current.width = 168;
-    digitCanvas.current.height = 168;
+    digitCanvas.current.width = ORIGIN_PIXEL_COUNT;
+    digitCanvas.current.height = ORIGIN_PIXEL_COUNT;
     ctx.current = digitCanvas.current.getContext("2d");
   }, []);
 
@@ -21,7 +23,9 @@ const Canvas = ({ setImageData }) => {
   const finishedPosition = () => {
     setPainting(false);
     ctx.current.beginPath();
-    parseImage(ctx.current.getImageData(0, 0, 168, 168));
+    parseImage(
+      ctx.current.getImageData(0, 0, ORIGIN_PIXEL_COUNT, ORIGIN_PIXEL_COUNT)
+    );
   };
 
   const getMousePos = e => {
@@ -45,11 +49,8 @@ const Canvas = ({ setImageData }) => {
   };
 
   const parseImage = image => {
-    const grayScaleArray = image.data.filter(
-      (e, index) => (index + 1) % 4 === 0
-    );
-    setImageData(grayScaleArray);
-   
+    const convertedImage = convertPixels(image);
+    setImageData(convertedImage);
   };
 
   return (
