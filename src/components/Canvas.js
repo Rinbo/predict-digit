@@ -1,21 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const Canvas = () => {
-  const [canvasSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight
-  });
+const Canvas = ({ setImageData }) => {
   const [painting, setPainting] = useState(false);
-  const [imageData, setImageData] = useState(null);
   const digitCanvas = useRef(null);
   const ctx = useRef(null);
 
   useEffect(() => {
-    digitCanvas.current.width = 200;
-    digitCanvas.current.height = 200;
-    digitCanvas.current.style.border = "1 px solid black";
+    digitCanvas.current.width = 168;
+    digitCanvas.current.height = 168;
     ctx.current = digitCanvas.current.getContext("2d");
-  }, [canvasSize]);
+  }, []);
 
   const startPosition = e => {
     setPainting(true);
@@ -27,7 +21,7 @@ const Canvas = () => {
   const finishedPosition = () => {
     setPainting(false);
     ctx.current.beginPath();
-    parseImage(ctx.current.getImageData(0, 0, 200, 200).data);
+    parseImage(ctx.current.getImageData(0, 0, 200, 200));
   };
 
   const getMousePos = e => {
@@ -51,8 +45,10 @@ const Canvas = () => {
   };
 
   const parseImage = image => {
-    const grayScaleArray = image.filter((e, index) => (index + 1) % 4 === 0);
-    setImageData(grayScaleArray);
+    const grayScaleArray = image.data.filter(
+      (e, index) => (index + 1) % 4 === 0
+    );
+    setImageData(image);
     console.log(grayScaleArray.slice(0, 199));
   };
 

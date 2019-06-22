@@ -1,3 +1,5 @@
 canvas {
   border: solid black;
+  display: inline;
+  margin: 0 50px;
 }

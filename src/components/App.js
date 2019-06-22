@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Canvas from "./Canvas";
+import OutputCanvas from "./OutputCanvas";
 
 const App = () => {
+  const [imageData, setImageData] = useState(null);
+
   return (
     <div className="container mx-auto">
       <div className="text-center">
@@ -12,7 +15,8 @@ const App = () => {
           Write a single digit in the box and see if the neural network can
           predict which number you drew.
         </div>
-        <Canvas />
+        <Canvas setImageData={setImageData} />
+        <OutputCanvas imageData={imageData} />
       </div>
     </div>
   );
