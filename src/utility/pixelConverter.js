@@ -4,7 +4,6 @@ export const convertPixels = image => {
   const grayScaleArray = image.data.filter((e, index) => (index + 1) % 4 === 0);
 
   const scaledImage = scaler([...grayScaleArray]);
-
   // Convert back to ImageData object
   const arr = [];
   for (let i = 0; i < scaledImage.length; i++) {
@@ -32,9 +31,15 @@ const scaler = imageArray => {
         twentyEight[i] = [].concat(twentyEight[i] || [], e[j].splice(0, 1));
       }
     }
-    return twentyEight;
+    const returnValue = twentyEight.map(matrix => {
+      return takeSumAndConvertToRGB(matrix);
+    });
+
+    return returnValue;
   });
-  debugger;
+
+  return output.flat();
+
   /* const output = matrix.map(e => {
     const pixelValue = e.reduce(
       (accumulator, currentValue) => accumulator + currentValue
@@ -60,6 +65,16 @@ const createMatrix = (arr, chunkSize) => {
     all[chunk].push(currentValue);
     return all;
   }, []);
+};
+
+const takeSumAndConvertToRGB = arr => {
+  const subSums = arr.map(e => {
+    return e.reduce((accum, currentValue) => accum + currentValue);
+  });
+  const finalSum = subSums.reduce(
+    (accum, currentValue) => accum + currentValue
+  );
+  return Math.floor((finalSum / 36) * 255);
 };
 
 /* 
