@@ -4,7 +4,11 @@ export const convertPixels = image => {
   const grayScaleArray = image.data.filter((e, index) => (index + 1) % 4 === 0);
 
   const scaledImage = scaler([...grayScaleArray]);
-  // Convert back to ImageData object
+
+  /*
+   * Convert back to ImageData object
+   *
+   */
   const arr = [];
   for (let i = 0; i < scaledImage.length; i++) {
     for (let j = 0; j < 4; j++) {
@@ -21,43 +25,49 @@ export const convertPixels = image => {
 
 const scaler = imageArray => {
   const normalizedArray = imageArray.map(e => Math.ceil(e / 255));
-  const sixes = reduceArray(normalizedArray, 6);
-  const matrixRows = createMatrix(sixes, 28);
-  const matrix = createMatrix(matrixRows, 6);
+
+  /*
+   * Chop up into array chunks adhering to scale factor
+   *
+   */
+  const sixes = createMatrix(normalizedArray, SCALE_FACTOR);
+
+  /*
+   * Intermediary step creating a matrix each row is an array consisting of CONVERTED_PIXEL_COUNT elements and each element having the size of the scale factor
+   *
+   */
+  const matrixRows = createMatrix(sixes, CONVERTED_PIXEL_COUNT);
+
+  /*
+   * Once again reformat matrix to take the form of containing CONVERTED_PIXEL_COUNT elements in the outermost layer.
+   * Each one of these arrays contain the information to create one row of the converted pixel matrix
+   * Basically this sets up the matrix to be plucked effeciently
+   */
+  const matrix = createMatrix(matrixRows, SCALE_FACTOR);
+
   const output = matrix.map(e => {
-    const twentyEight = [];
+    const convertedPixelRow = [];
     for (let i = 0; i < 28; i++) {
       for (let j = 0; j < e.length; j++) {
-        twentyEight[i] = [].concat(twentyEight[i] || [], e[j].splice(0, 1));
+        convertedPixelRow[i] = [].concat(
+          convertedPixelRow[i] || [],
+          e[j].splice(0, 1)
+        );
       }
     }
-    const returnValue = twentyEight.map(matrix => {
+    const returnValue = convertedPixelRow.map(matrix => {
       return takeSumAndConvertToRGB(matrix);
     });
 
     return returnValue;
   });
-
   return output.flat();
-
-  /* const output = matrix.map(e => {
-    const pixelValue = e.reduce(
-      (accumulator, currentValue) => accumulator + currentValue
-    );
-    if (pixelValue > 18) return 255;
-    return 0;
-  });
-  return output; */
 };
 
-const reduceArray = (arr, chunkSize) => {
-  return arr.reduce((all, currentValue, index) => {
-    const chunk = Math.floor(index / chunkSize);
-    all[chunk] = [].concat(all[chunk] || [], currentValue);
-    return all;
-  }, []);
-};
-
+/*
+ * Helper function that takes in an array and reduces it into a new array with inner arrays of size passed in as parameter 'chunkSize'
+ *
+ */
 const createMatrix = (arr, chunkSize) => {
   return arr.reduce((all, currentValue, index) => {
     const chunk = Math.floor(index / chunkSize);
@@ -67,6 +77,10 @@ const createMatrix = (arr, chunkSize) => {
   }, []);
 };
 
+/*
+ * Custum function calculates the sum of a nested array and converts the binary pixel values back into grayscale
+ *
+ */
 const takeSumAndConvertToRGB = arr => {
   const subSums = arr.map(e => {
     return e.reduce((accum, currentValue) => accum + currentValue);
@@ -76,21 +90,3 @@ const takeSumAndConvertToRGB = arr => {
   );
   return Math.floor((finalSum / 36) * 255);
 };
-
-/* 
-const matrix = [];
-  for (let i = 0; i < CONVERTED_PIXEL_COUNT ** 2; i++) {
-    matrix[i] = [];
-  }
-
-  for (let i = 0; i < CONVERTED_PIXEL_COUNT; i++) {
-    for (let j = 0; j < SCALE_FACTOR; j++) {
-      for (let k = 0; k < CONVERTED_PIXEL_COUNT; k++) {
-        const index = i * CONVERTED_PIXEL_COUNT + k;
-        matrix[index] = matrix[index].concat(
-          normalizedArray.splice(0, SCALE_FACTOR)
-        );
-      }
-    }
-  }
-*/
