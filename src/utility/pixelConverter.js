@@ -5,18 +5,18 @@ export const convertPixels = image => {
   const grayScaleArray = image.data.filter((e, index) => (index + 1) % 4 === 0);
 
   const scaledImage = scaler([...grayScaleArray]);
-  scaledImage = forwardPropagation(scaledImage);
+  const propagatedImage = forwardPropagation(scaledImage);
   /*
    * Convert back to ImageData object
    *
    */
   const arr = [];
-  for (let i = 0; i < scaledImage.length; i++) {
+  for (let i = 0; i < propagatedImage.length; i++) {
     for (let j = 0; j < 4; j++) {
       if (j !== 3) {
         arr.push(0);
       } else {
-        arr.push(scaledImage[i]);
+        arr.push(propagatedImage[i]);
       }
     }
   }
