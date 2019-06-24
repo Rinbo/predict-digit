@@ -1,10 +1,11 @@
 import { SCALE_FACTOR, CONVERTED_PIXEL_COUNT } from "./pixelConstants";
+import { forwardPropagation } from "./ForwardPropagation";
 
 export const convertPixels = image => {
   const grayScaleArray = image.data.filter((e, index) => (index + 1) % 4 === 0);
 
   const scaledImage = scaler([...grayScaleArray]);
-
+  scaledImage = forwardPropagation(scaledImage);
   /*
    * Convert back to ImageData object
    *
