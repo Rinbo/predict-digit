@@ -5,9 +5,7 @@ export const forwardPropagation = X => {
   X.unshift(1);
   const T1 = getFile(file1);
 
-  console.log(T1);
-  X.shift();
-  return X;
+  return T1;
 };
 
 const getFile = async input => {

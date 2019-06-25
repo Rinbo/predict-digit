@@ -1,26 +1,26 @@
 import { SCALE_FACTOR, CONVERTED_PIXEL_COUNT } from "./pixelConstants";
-import { forwardPropagation } from "./ForwardPropagation";
 
-export const convertPixels = image => {
+export const convertPixels = (image, setInputVector) => {
   const grayScaleArray = image.data.filter((e, index) => (index + 1) % 4 === 0);
 
   const scaledImage = scaler([...grayScaleArray]);
-  const propagatedImage = forwardPropagation(scaledImage);
+  setInputVector(scaledImage);
   /*
    * Convert back to ImageData object
    *
    */
   const arr = [];
-  for (let i = 0; i < propagatedImage.length; i++) {
+  for (let i = 0; i < scaledImage.length; i++) {
     for (let j = 0; j < 4; j++) {
       if (j !== 3) {
         arr.push(0);
       } else {
-        arr.push(propagatedImage[i]);
+        arr.push(scaledImage[i]);
       }
     }
   }
   const imageData = new Uint8ClampedArray(arr);
+
   return new ImageData(imageData, CONVERTED_PIXEL_COUNT, CONVERTED_PIXEL_COUNT);
 };
 

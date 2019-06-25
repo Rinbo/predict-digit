@@ -4,7 +4,7 @@ import OutputCanvas from "./OutputCanvas";
 
 const App = () => {
   const [scaledImage, setImageData] = useState(null);
-
+  const [inputVector, setInputVector] = useState(null);
   return (
     <div className="container mx-auto">
       <div className="text-center">
@@ -15,8 +15,8 @@ const App = () => {
           Write a single digit in the box and see if the neural network can
           predict which number you drew.
         </div>
-        <Canvas setImageData={setImageData} />
-        <OutputCanvas scaledImage={scaledImage} />
+        <Canvas setImageData={setImageData} setInputVector={setInputVector} />
+        <OutputCanvas scaledImage={scaledImage} inputVector={inputVector} />
       </div>
     </div>
   );

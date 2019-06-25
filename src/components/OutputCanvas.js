@@ -1,7 +1,9 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { CONVERTED_PIXEL_COUNT } from "../utility/pixelConstants";
+import { forwardPropagation } from "../utility/ForwardPropagation";
 
-const OutputCanvas = ({ scaledImage }) => {
+const OutputCanvas = ({ scaledImage, inputVector }) => {
+  const [prediction, setPrediction] = useState(null);
   const digitCanvas = useRef(null);
   const ctx = useRef(null);
 
@@ -13,8 +15,12 @@ const OutputCanvas = ({ scaledImage }) => {
     if (scaledImage) {
       ctx.current.putImageData(scaledImage, 0, 0);
     }
-  }, [scaledImage]);
+    if (inputVector) {
+      forwardPropagation(inputVector).then(response => setPrediction(response));
+    }
+  }, [scaledImage, inputVector]);
 
+  console.log(prediction);
   return <canvas ref={digitCanvas} />;
 };
 

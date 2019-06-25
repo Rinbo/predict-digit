@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { convertPixels } from "../utility/pixelConverter";
 import { ORIGIN_PIXEL_COUNT } from "../utility/pixelConstants";
 
-const Canvas = ({ setImageData }) => {
+const Canvas = ({ setImageData, setInputVector }) => {
   const [painting, setPainting] = useState(false);
   const digitCanvas = useRef(null);
   const ctx = useRef(null);
@@ -49,7 +49,7 @@ const Canvas = ({ setImageData }) => {
   };
 
   const parseImage = image => {
-    const convertedImage = convertPixels(image);
+    const convertedImage = convertPixels(image, setInputVector);
     setImageData(convertedImage);
   };
 
