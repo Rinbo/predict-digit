@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { CONVERTED_PIXEL_COUNT } from "../utility/pixelConstants";
-//import { forwardPropagation } from "../utility/LoadThetaMatrices";
+import { forwardPropagation } from "../utility/ForwardPropagation";
 
 const OutputCanvas = ({ scaledImage, inputVector, thetaMatrices }) => {
   const [prediction, setPrediction] = useState(null);
@@ -16,10 +16,10 @@ const OutputCanvas = ({ scaledImage, inputVector, thetaMatrices }) => {
       ctx.current.putImageData(scaledImage, 0, 0);
     }
     if (inputVector) {
-      //forwardPropagation(inputVector) //.then(response => setPrediction(response));
+      setPrediction(forwardPropagation(inputVector, thetaMatrices));
     }
-  }, [scaledImage, inputVector]);
-  
+  }, [scaledImage, inputVector, thetaMatrices]);
+  console.log(prediction);
   return <canvas ref={digitCanvas} />;
 };
 
