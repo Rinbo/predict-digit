@@ -20,7 +20,7 @@ const OutputCanvas = ({ scaledImage, inputVector, thetaMatrices }) => {
     }
   }, [scaledImage, inputVector, thetaMatrices]);
   console.log(prediction);
-  return <canvas ref={digitCanvas} />;
+  return <canvas ref={digitCanvas} style={{width: 28, height: 28}}/>;
 };
 
 export default OutputCanvas;

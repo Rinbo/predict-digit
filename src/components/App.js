@@ -17,21 +17,21 @@ const App = () => {
   });
 
   useEffect(() => {
-      loadMatrix(file1).then(response =>
-        setThetaMatrices(prevState => {
-          return { ...prevState, T1: response };
-        })
-      );
-      loadMatrix(file2).then(response =>
-        setThetaMatrices(prevState => {
-          return { ...prevState, T2: response };
-        })
-      );
-      loadMatrix(file3).then(response =>
-        setThetaMatrices(prevState => {
-          return { ...prevState, T3: response };
-        })
-      );
+    loadMatrix(file1).then(response =>
+      setThetaMatrices(prevState => {
+        return { ...prevState, T1: response };
+      })
+    );
+    loadMatrix(file2).then(response =>
+      setThetaMatrices(prevState => {
+        return { ...prevState, T2: response };
+      })
+    );
+    loadMatrix(file3).then(response =>
+      setThetaMatrices(prevState => {
+        return { ...prevState, T3: response };
+      })
+    );
   }, []);
   return (
     <div className="container mx-auto">
@@ -39,16 +39,19 @@ const App = () => {
         <h1 className="bg-purple-600 m-6 p-6 rounded shadow-lg text-lg">
           Predict the digit!
         </h1>
+
         <div className="text-base mb-12">
           Write a single digit in the box and see if the neural network can
           predict which number you drew.
         </div>
-        <Canvas setImageData={setImageData} setInputVector={setInputVector} />
-        <OutputCanvas
-          scaledImage={scaledImage}
-          inputVector={inputVector}
-          thetaMatrices={thetaMatrices}
-        />
+        <div className="flex justify-center items-center">
+          <Canvas setImageData={setImageData} setInputVector={setInputVector} />
+          <OutputCanvas
+            scaledImage={scaledImage}
+            inputVector={inputVector}
+            thetaMatrices={thetaMatrices}
+          />
+        </div>
       </div>
     </div>
   );

@@ -54,12 +54,23 @@ const Canvas = ({ setImageData, setInputVector }) => {
   };
 
   return (
-    <canvas
-      ref={digitCanvas}
-      onMouseDown={e => startPosition(e)}
-      onMouseUp={() => finishedPosition()}
-      onMouseMove={e => draw(e)}
-    />
+    <div style={{ display: "inline" }}>
+      <canvas
+        ref={digitCanvas}
+        onMouseDown={e => startPosition(e)}
+        onMouseUp={() => finishedPosition()}
+        onMouseMove={e => draw(e)}
+      />
+      <div>
+        <button
+          className="btn btn-purple"
+          style={{ margin: 10 }}
+          onClick={() => (ctx.current.clearRect(0, 0, ORIGIN_PIXEL_COUNT, ORIGIN_PIXEL_COUNT))}
+        >
+          Erase
+        </button>
+      </div>
+    </div>
   );
 };
 
