@@ -57,7 +57,7 @@ const scaler = imageArray => {
       }
     }
     const returnValue = convertedPixelRow.map(matrix => {
-      return takeSumAndConvertToRGB(matrix);
+      return takeSumAndNormalize(matrix);
     });
 
     return returnValue;
@@ -82,12 +82,12 @@ const createMatrix = (arr, chunkSize) => {
  * Custum function calculates the sum of a nested array and converts the binary pixel values back into grayscale
  *
  */
-const takeSumAndConvertToRGB = arr => {
+const takeSumAndNormalize = arr => {
   const subSums = arr.map(e => {
     return e.reduce((accum, currentValue) => accum + currentValue);
   });
   const finalSum = subSums.reduce(
     (accum, currentValue) => accum + currentValue
   );
-  return Math.floor((finalSum / 36) * 255);
+  return (finalSum / 36);
 };
