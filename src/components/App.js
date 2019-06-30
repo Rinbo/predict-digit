@@ -3,9 +3,9 @@ import { loadMatrix } from "../utility/LoadMatrix";
 import Canvas from "./Canvas";
 import OutputCanvas from "./OutputCanvas";
 
-const file1 = require("../resources/Theta1.txt");
-const file2 = require("../resources/Theta2.txt");
-const file3 = require("../resources/Theta3.txt");
+const file1 = require("../resources/T1.txt");
+const file2 = require("../resources/T2.txt");
+const file3 = require("../resources/T3.txt");
 
 const App = () => {
   const [scaledImage, setImageData] = useState(null);
