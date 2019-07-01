@@ -39,7 +39,7 @@ const Canvas = ({ setImageData, setInputVector }) => {
   const draw = e => {
     if (!painting) return;
     const pos = getMousePos(e);
-    ctx.current.lineWidth = 10;
+    ctx.current.lineWidth = 6;
     ctx.current.lineCap = "round";
     ctx.current.strokeStyle = "black";
     ctx.current.lineTo(pos.x, pos.y);

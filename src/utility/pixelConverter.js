@@ -2,7 +2,6 @@ import { SCALE_FACTOR, CONVERTED_PIXEL_COUNT } from "./pixelConstants";
 
 export const convertPixels = (image, setInputVector) => {
   const grayScaleArray = image.data.filter((e, index) => (index + 1) % 4 === 0);
-
   const scaledImage = scaler([...grayScaleArray]);
   setInputVector(scaledImage);
   /*
@@ -62,7 +61,19 @@ const scaler = imageArray => {
 
     return returnValue;
   });
-  return output.flat();
+
+  /*
+   * Reshape matrix to correspond to how matrixes are constructed from vectors in octave (column by column instead of row by row)
+   *
+   */
+  const rotatedOutput = [];
+  for (let i = 0; i < 28; i++) {
+    rotatedOutput[i] = [];
+    output.forEach(arr => {
+      rotatedOutput[i].push(arr[i]);
+    });
+  }
+  return rotatedOutput.flat();
 };
 
 /*
@@ -89,5 +100,6 @@ const takeSumAndNormalize = arr => {
   const finalSum = subSums.reduce(
     (accum, currentValue) => accum + currentValue
   );
-  return (finalSum / 36);
+
+  return finalSum / 36;
 };
