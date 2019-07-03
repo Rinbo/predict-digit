@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { convertPixels } from "../utility/pixelConverter";
 import { ORIGIN_PIXEL_COUNT } from "../utility/pixelConstants";
 
-const Canvas = ({ setImageData, setInputVector }) => {
+const Canvas = ({ setImageData, setInputVector, setShowPrediction }) => {
   const [painting, setPainting] = useState(false);
   const digitCanvas = useRef(null);
   const ctx = useRef(null);
@@ -39,7 +39,7 @@ const Canvas = ({ setImageData, setInputVector }) => {
   const draw = e => {
     if (!painting) return;
     const pos = getMousePos(e);
-    ctx.current.lineWidth = 6;
+    ctx.current.lineWidth = 12;
     ctx.current.lineCap = "round";
     ctx.current.strokeStyle = "black";
     ctx.current.lineTo(pos.x, pos.y);
@@ -50,6 +50,7 @@ const Canvas = ({ setImageData, setInputVector }) => {
 
   const parseImage = image => {
     const convertedImage = convertPixels(image, setInputVector);
+    setShowPrediction(true);
     setImageData(convertedImage);
   };
 
@@ -65,7 +66,10 @@ const Canvas = ({ setImageData, setInputVector }) => {
         <button
           className="btn btn-purple"
           style={{ margin: 10 }}
-          onClick={() => (ctx.current.clearRect(0, 0, ORIGIN_PIXEL_COUNT, ORIGIN_PIXEL_COUNT))}
+          onClick={() => {
+            ctx.current.clearRect(0, 0, ORIGIN_PIXEL_COUNT, ORIGIN_PIXEL_COUNT);
+            setShowPrediction(false);
+          }}
         >
           Erase
         </button>

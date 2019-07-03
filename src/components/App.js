@@ -10,6 +10,7 @@ const file3 = require("../resources/T3.txt");
 const App = () => {
   const [scaledImage, setImageData] = useState(null);
   const [inputVector, setInputVector] = useState(null);
+  const [showPrediction, setShowPrediction] = useState(false);
   const [thetaMatrices, setThetaMatrices] = useState({
     T1: null,
     T2: null,
@@ -45,11 +46,16 @@ const App = () => {
           predict which number you drew.
         </div>
         <div className="flex justify-center items-center">
-          <Canvas setImageData={setImageData} setInputVector={setInputVector} />
+          <Canvas
+            setImageData={setImageData}
+            setInputVector={setInputVector}
+            setShowPrediction={setShowPrediction}
+          />
           <OutputCanvas
             scaledImage={scaledImage}
             inputVector={inputVector}
             thetaMatrices={thetaMatrices}
+            showPrediction={showPrediction}
           />
         </div>
       </div>
