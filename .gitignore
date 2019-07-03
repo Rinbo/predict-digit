@@ -12,7 +12,7 @@
 /build
 
 network/octave-workspace
-
+network/MNIST
 
 # misc
 .DS_Store
