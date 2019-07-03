@@ -55,10 +55,7 @@ const Canvas = ({ setImageData, setInputVector, setShowPrediction }) => {
   };
 
   return (
-    <div
-      className="flex flex-col justify-center"
-      style={{height: 240}}
-    >
+    <div className="flex flex-col justify-center" style={{ height: 240 }}>
       <canvas
         className="myCanvas"
         ref={digitCanvas}
@@ -71,7 +68,7 @@ const Canvas = ({ setImageData, setInputVector, setShowPrediction }) => {
       />
       <div>
         <button
-          className="btn btn-green"
+          className="btn btn-green  "
           style={{ margin: 10 }}
           onClick={() => {
             ctx.current.clearRect(0, 0, ORIGIN_PIXEL_COUNT, ORIGIN_PIXEL_COUNT);
