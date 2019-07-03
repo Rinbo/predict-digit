@@ -609,13 +609,13 @@ video {
   margin: 1rem;
 }
 
-.btn-purple {
-  background-color: #9f7aea;
+.btn-green {
+  background-color: #48bb78;
   color: #fff;
 }
 
-.btn-purple:hover {
-  background-color: #6b46c1;
+.btn-green:hover {
+  background-color: #2f855a;
 }
 
 .container {

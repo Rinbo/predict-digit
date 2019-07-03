@@ -55,16 +55,23 @@ const Canvas = ({ setImageData, setInputVector, setShowPrediction }) => {
   };
 
   return (
-    <div style={{ display: "inline" }}>
+    <div
+      className="flex flex-col justify-center"
+      style={{height: 240}}
+    >
       <canvas
+        className="myCanvas"
         ref={digitCanvas}
         onMouseDown={e => startPosition(e)}
         onMouseUp={() => finishedPosition()}
         onMouseMove={e => draw(e)}
+        onTouchStart={e => startPosition(e)}
+        onTouchEnd={() => finishedPosition()}
+        onTouchMove={e => draw(e)}
       />
       <div>
         <button
-          className="btn btn-purple"
+          className="btn btn-green"
           style={{ margin: 10 }}
           onClick={() => {
             ctx.current.clearRect(0, 0, ORIGIN_PIXEL_COUNT, ORIGIN_PIXEL_COUNT);

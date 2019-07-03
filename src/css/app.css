@@ -1,5 +1,7 @@
-canvas {
-  border: solid black;
+.myCanvas {
+  border: 1px solid black;
+  border-color: gray;
+  border-radius: 5px;
   display: inline;
   margin: 0 50px;
 }

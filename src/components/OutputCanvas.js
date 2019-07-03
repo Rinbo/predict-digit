@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { forwardPropagation } from "../utility/ForwardPropagation";
+import BarChart from "./BarChart";
 
 const OutputCanvas = ({
   scaledImage,
@@ -25,24 +26,18 @@ const OutputCanvas = ({
     }
   }, [scaledImage, inputVector, thetaMatrices, showPrediction]);
 
+  /*<canvas ref={digitCanvas} style={{ width: 28, height: 28 }} />*/
+
   return (
-    <>
-      {/*<canvas ref={digitCanvas} style={{ width: 28, height: 28 }} />*/}
-      <h1>
-        <p className="text-3xl">
-          {showPrediction
-            ? prediction.indexOf(Math.max(...prediction)) + 1
-            : ""}
-        </p>
-        {prediction.map((e, index) => {
-          return (
-            <div key={index}>
-              Digit {index + 1}: {Math.floor(e * 100)}
-            </div>
-          );
-        })}
-      </h1>
-    </>
+    <div className="flex flex-col justify-start" style={{height: 240}}>
+      <div className="text-3xl" style={{height:50}}>
+        {showPrediction ? `Predicted digit: ${prediction.indexOf(Math.max(...prediction)) + 1}` : ""}
+      </div>
+     
+      <div>
+        <BarChart prediction={prediction} />
+      </div>
+    </div>
   );
 };
 
