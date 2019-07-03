@@ -11,8 +11,6 @@
 # production
 /build
 
-/network
-
 network/octave-workspace
 
 
