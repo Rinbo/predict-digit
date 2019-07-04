@@ -17,6 +17,16 @@ const App = () => {
     T3: null
   });
 
+  document.addEventListener(
+    "touchmove",
+    e => {
+      if (e.target.className === "myCanvas") {
+        e.preventDefault();
+      }
+    },
+    { passive: false }
+  );
+
   useEffect(() => {
     loadMatrix(file1).then(response =>
       setThetaMatrices(prevState => {

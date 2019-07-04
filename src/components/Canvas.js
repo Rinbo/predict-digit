@@ -28,12 +28,35 @@ const Canvas = ({ setImageData, setInputVector, setShowPrediction }) => {
     );
   };
 
+  const touchPosition = e => {
+    const touch = e.touches[0];
+    const mouseEvent = new MouseEvent("mousedown", {
+      clientX: touch.clientX,
+      clientY: touch.clientY
+    });
+    startPosition(mouseEvent);
+  };
+
+  const touchFinished = () => {
+    const mouseEvent = new MouseEvent("mouseup", {});
+    finishedPosition(mouseEvent);
+  };
+
   const getMousePos = e => {
     const rect = digitCanvas.current.getBoundingClientRect();
     return {
       x: e.clientX - rect.left,
       y: e.clientY - rect.top
     };
+  };
+
+  const touchDraw = e => {
+    const touch = e.touches[0];
+    const mouseEvent = new MouseEvent("mousemove", {
+      clientX: touch.clientX,
+      clientY: touch.clientY
+    });
+    draw(mouseEvent);
   };
 
   const draw = e => {
@@ -62,9 +85,9 @@ const Canvas = ({ setImageData, setInputVector, setShowPrediction }) => {
         onMouseDown={e => startPosition(e)}
         onMouseUp={() => finishedPosition()}
         onMouseMove={e => draw(e)}
-        onTouchStart={e => startPosition(e)}
-        onTouchEnd={() => finishedPosition()}
-        onTouchMove={e => draw(e)}
+        onTouchStart={e => touchPosition(e)}
+        onTouchEnd={() => touchFinished()}
+        onTouchMove={e => touchDraw(e)}
       />
       <div>
         <button

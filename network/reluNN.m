@@ -8,7 +8,7 @@ function [Theta1, Theta2, Theta3, accCV] = reluNN (X, Y, XCV, YCV, ...
 	close all;
 	% Network Architecture:
 	% Number of hidden Layers: 2
-	num_hidden_units = 100; % Number of hidden Units
+	num_hidden_units = 50; % Number of hidden Units
 	num_output_units = size(unique(Y), 1);
 	num_input_units = size(X(:,1),1);
 	m = size(X,2); % Number of trainings examples
@@ -65,7 +65,7 @@ function [Theta1, Theta2, Theta3, accCV] = reluNN (X, Y, XCV, YCV, ...
 
 		% alpha = baseAlpha * ((epoch)/((epoch) + i))
 		% Some home-cooked variant of gradually decreasing alpha
-		alpha = (-0.5*log(i) +2) * baseAlpha
+		% alpha = (-0.5*log(i) +2) * baseAlpha
 
 		HCV = CVEstimateWithDO (XCV, Theta1*mask, Theta2*mask, Theta3*mask);
 		accCV(i) = performance (HCV, YCV);		
